@@ -1,0 +1,48 @@
+﻿@page
+@model EPonto.Pages.RH.ListaPontoModel
+
+@{
+    ViewData["Title"] = "Listagem de Pontos";
+}
+
+<h1>Listagem de Pontos</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                CPF
+            </th>
+            <th>
+                Nome do Funcionário
+            </th>
+            <th>
+                Data e Hora do Ponto
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Ponto)
+        {
+            @foreach (var subitem in Model.Funcionario)
+            {
+                @if (subitem.Cpf == item.CpfFuncionario)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CpfFuncionario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => subitem.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoraPonto)
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        }
+    </tbody>
+</table>

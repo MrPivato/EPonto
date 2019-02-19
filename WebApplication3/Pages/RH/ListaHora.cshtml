@@ -1,0 +1,88 @@
+﻿@page
+@model EPonto.Pages.RH.ListaHoraModel
+@{
+    ViewData["Title"] = "Listagem de Horas";
+}
+
+<h1>Listagem de Horas</h1>
+<p>Abaixo são listadas informações sobre Funcionários com o Expediente encerrado.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cpf
+            </th>
+            <th>
+                Nome Funcionário
+            </th>
+            <th>
+                Carga Horária
+            </th>
+            <th>
+                Horas Trabalhadas
+            </th>
+            <th>
+                Horas Extras
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Funcionario)
+        {
+            string[] valores = new string[4];
+            int a = 0;
+            int c = 0;
+            @foreach (var subitem in Model.Ponto)
+            {
+                IDictionary<int, string> HorarioDePonto = new Dictionary<int, string>();
+
+                @if (subitem.CpfFuncionario == item.Cpf)
+                {
+                    HorarioDePonto[c] = subitem.HoraPonto;
+                    c++;
+        <tr>
+
+            @foreach (var k in HorarioDePonto)
+            {
+                valores[a] = k.Value;
+
+                if (a == 3)
+                {
+                    // [1] - [0] e [3] - [2]
+                    DateTime hora0 = DateTime.Parse(valores[0]);
+                    DateTime hora1 = DateTime.Parse(valores[1]);
+                    DateTime hora2 = DateTime.Parse(valores[2]);
+                    DateTime hora3 = DateTime.Parse(valores[3]);
+
+                    TimeSpan horasTotais = (hora1 - hora0) + (hora3 - hora2);
+
+                    TimeSpan convCarga = TimeSpan.Parse(item.CargaHoraria);
+                    TimeSpan horasExtras = horasTotais - convCarga;
+
+                    if (horasExtras.CompareTo(TimeSpan.Zero) < 0)
+                    {
+                        horasExtras = TimeSpan.Zero;
+                    }
+
+                    <td>@Html.DisplayFor(modelItem => subitem.CpfFuncionario)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CargaHoraria)</td>
+                    <td>@horasTotais</td>
+                    <td>@horasExtras</td>
+
+                    a = 0;
+                }
+                else
+                {
+                    a++;
+                }
+            }
+        </tr>
+                }
+
+            }
+        }
+    </tbody>
+</table>
+

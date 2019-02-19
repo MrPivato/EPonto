@@ -1,0 +1,30 @@
+﻿@page
+@model EPonto.Pages.BaterPontoModel
+
+@{
+    ViewData["Title"] = "BaterPonto";
+}
+
+<h1 class="text-center">Bater Ponto</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4 center-block">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group center-block">
+                <input asp-for="Ponto.CpfFuncionario" class="form-control" placeholder="CPF"/>
+                <span asp-validation-for="Ponto.CpfFuncionario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Ponto.HoraPonto" value="@DateTime.Now" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group text-md-center">
+                <input type="submit" value="Registrar Ponto" class="btn btn-primary " />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

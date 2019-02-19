@@ -1,0 +1,52 @@
+﻿@page
+@model EPonto.Pages.RH.ListaFuncionarioModel
+
+@{
+    ViewData["Title"] = "Listagem de Funcionários";
+}
+
+<h1>Listagem de Funcionários</h1>
+
+<div class="text-right">
+    <a asp-page="CriaFuncionario">Criar Novo</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cpf
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                E-mail
+            </th>
+            <th>
+                Carga Horária
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Funcionario) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cpf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CargaHoraria)
+            </td>
+            <td>
+                <a asp-page="./EditaFuncionario" asp-route-id="@item.Cpf"><i class="fas fa-user-edit fa-2x"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
